@@ -97,13 +97,13 @@ func (r *Runner) buildTimingPlatform() {
 }
 
 func (r *Runner) configureVisTracing() {
-	if !*visTracing {
-		return
-	}
-
 	visTracer := r.simulation.GetVisTracer()
 	for _, comp := range r.simulation.Components() {
 		tracing.CollectTrace(comp.(tracing.NamedHookable), visTracer)
+	}
+
+	if *visTracing {
+		visTracer.EnableTracing() // 如果有*visTracing，打开
 	}
 }
 
